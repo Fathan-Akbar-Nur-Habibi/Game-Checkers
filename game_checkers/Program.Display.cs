@@ -29,9 +29,15 @@ public void ShowBoard()
 		{
 			if (pieces[i,j]!= null)
 			{
-				Console.Write()
+				Console.Write($"{pieces[i,j].Colour.ToString()[0]}{(pieces[i,j].Type == CharType.King ? 'K' :'M')}");
 			}
+			else { 
+				Console.Write(". ");
+			}
+			}
+			Console.WriteLine();
 		}
+		
 	}
 }
 
