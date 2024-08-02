@@ -1,4 +1,4 @@
-namespace game_checkers.Class;
+namespace game_checkers;
 
 public class Destination
 {

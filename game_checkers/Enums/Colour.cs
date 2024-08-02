@@ -1,4 +1,4 @@
-namespace game_checkers.Enums;
+namespace game_checkers;
 
 public enum Colour
 {

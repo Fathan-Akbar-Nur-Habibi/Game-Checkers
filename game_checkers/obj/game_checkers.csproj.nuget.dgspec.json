@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Batch 11\\Desktop\\project-checkers\\game_checkers\\game_checkers.csproj": {}
+    "C:\\Users\\Batch 11\\Desktop\\Game-Checkers\\game_checkers\\game_checkers.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Batch 11\\Desktop\\project-checkers\\game_checkers\\game_checkers.csproj": {
+    "C:\\Users\\Batch 11\\Desktop\\Game-Checkers\\game_checkers\\game_checkers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Batch 11\\Desktop\\project-checkers\\game_checkers\\game_checkers.csproj",
+        "projectUniqueName": "C:\\Users\\Batch 11\\Desktop\\Game-Checkers\\game_checkers\\game_checkers.csproj",
         "projectName": "game_checkers",
-        "projectPath": "C:\\Users\\Batch 11\\Desktop\\project-checkers\\game_checkers\\game_checkers.csproj",
+        "projectPath": "C:\\Users\\Batch 11\\Desktop\\Game-Checkers\\game_checkers\\game_checkers.csproj",
         "packagesPath": "C:\\Users\\Batch 11\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Batch 11\\Desktop\\project-checkers\\game_checkers\\obj\\",
+        "outputPath": "C:\\Users\\Batch 11\\Desktop\\Game-Checkers\\game_checkers\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Batch 11\\AppData\\Roaming\\NuGet\\NuGet.Config"

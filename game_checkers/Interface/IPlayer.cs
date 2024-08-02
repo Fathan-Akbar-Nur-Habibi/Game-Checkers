@@ -1,4 +1,4 @@
-namespace game_checkers.Interface;
+namespace game_checkers;
 
 public interface IPlayer
 {

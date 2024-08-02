@@ -1,8 +1,4 @@
-namespace game_checkers.Class;
-
-
-using System.Runtime.CompilerServices;
-
+namespace game_checkers;
 public abstract class Piece
 {
 	public int Id { get; }

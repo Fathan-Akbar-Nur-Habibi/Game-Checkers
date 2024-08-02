@@ -1,7 +1,4 @@
-namespace game_checkers.Controller;
-
-using System.Reflection.Metadata;
-
+namespace game_checkers;
 public class GameController { 
 	
 	public int PieceOnBoard;
