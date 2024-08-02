@@ -20,19 +20,54 @@ private void SubscribeToEvent()
 	_gameController.OnPieceUpgrade += ShowpPieceUpgrade;
 	_gameController.OnGameEnd += ShowGameEnd;
 }
-public void ShowBoard(){}
+public void ShowBoard()
+{
+	var pieces = _board.GetBoard();
+	for (int i=0; i<8; i++)
+	{
+		for (int j = 0; i<8; j++)
+		{
+			if (pieces[i,j]!= null)
+			{
+				Console.Write()
+			}
+		}
+	}
+}
 
 public void ShowTurnChanged(){}
 
-public void ShowPieceMoved(){}
+public void ShowPieceMoved(int turn)
+{
+	Console.WriteLine($"Turn  change to player{turn}");
+}
 
-public void ShowPieceRemoved(){}
+public void ShowPieceRemoved(Piece piece, Destination from, Destination to)
+{
+	Console.WriteLine($"{piece.Colour} piece move from ({from.x},{from.y})to ({to.x},{to.y})");
+}
 
-public void ShowpPieceUpgrade(){}
+public void ShowpPieceUpgrade(IPlayer player, Piece piece)
+{ 
+	Console.WriteLine($"{piece.Colour} piece upgrade to King at {piece.GetType().Name}");
+}
 
-public void ShowGameEnd(){}
+public void ShowGameEnd(IPlayer player)
+{
+	Console.WriteLine($"Game End! Winner : {player.Name}");
+}
+public void ShowPossibleMoves()
+{ 
+	var possibleMoves = _gameController.PossibbleMove(piece);
+	Console.WriteLine($"Possible Move for {piece.Colour} {piece.Type}:");
+		Console.WriteLine($"Possible moves for {piece.Colour} {piece.Type}:");
+		foreach (var move in pissibleMoves) 
+		{
+			Console.WriteLine($"({move.x},{move.y})");
+		}
+	
+}
 
-public void ShowPossibleMoves(){}
-
-public void StartGame(){}
+public void StartGame(){
+	ShowBoard();}
 }
