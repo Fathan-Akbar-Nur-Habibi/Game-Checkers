@@ -9,9 +9,17 @@ public Display(GameController gameController, Board
  {
  	_gameController = gameController; 
 	_board = board;  
+	SubscribeToEvent();
  }
 
-private void SubscribeToEvent(){}
+private void SubscribeToEvent()
+{
+	_gameController.OnTurnChanged += ShowTurnChanged;
+	_gameController.OnPieceMoved += ShowPieceMoved;
+	_gameController.OnPieceRemoved += ShowPieceRemoved; 
+	_gameController.OnPieceUpgrade += ShowpPieceUpgrade;
+	_gameController.OnGameEnd += ShowGameEnd;
+}
 public void ShowBoard(){}
 
 public void ShowTurnChanged(){}
