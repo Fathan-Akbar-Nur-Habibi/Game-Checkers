@@ -6,7 +6,7 @@ namespace game_checkers
 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             IPlayer player1 = new Player(1, "White");
             IPlayer player2 = new Player(2, "Red");

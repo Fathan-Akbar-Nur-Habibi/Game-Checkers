@@ -1,0 +1,15 @@
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\game_checkers.exe
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\game_checkers.deps.json
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\game_checkers.runtimeconfig.json
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\game_checkers.dll
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\game_checkers.pdb
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.AssemblyInfoInputs.cache
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.AssemblyInfo.cs
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.csproj.CoreCompileInputs.cache
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.sourcelink.json
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.dll
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\refint\game_checkers.dll
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.pdb
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.genruntimeconfig.cache
+c:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\ref\game_checkers.dll
