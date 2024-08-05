@@ -1,7 +1,11 @@
-namespace game_checkers;
+using System;
+using System.Collections.Generic;
 
-public enum CharType
+namespace game_checkers
 {
-    Man,
-    King
+    public enum CharType
+    {
+        Man,
+        King
+    }
 }

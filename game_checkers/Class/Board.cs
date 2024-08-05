@@ -1,50 +1,97 @@
-namespace game_checkers;
+using System;
+using System.Collections.Generic;
+namespace game_checkers
 
-public abstract class Board
 {
-    private Piece[,] _pieces;
-
-    protected Board(Piece[,] pieces)
+    public class Board
     {
-        _pieces = pieces;
-    }
+        protected Piece[,] _pieces = new Piece[8, 8];
 
-    public Piece[,] GetBoard()
-    {
-        return _pieces;
-    }
+        public Piece[,] GetBoard() => _pieces;
 
-    public bool IsOccupied(Destination destination)
-    {
-        return _pieces[destination.x, destination.y] != null;
-    }
-
-    public Destination GetDestination(Piece piece)
-    {
-        for (int i = 0; i < 8; i++)
+        public Board(Piece[,] pieces)
         {
-            for (int j = 0; j < 8; j++)
+            _pieces = pieces;
+        }
+
+        public bool IsOccupied(Destination destination)
+        {
+            return _pieces[destination.X, destination.Y] != null;
+        }
+
+        public Destination GetDestination(Piece piece)
+        {
+            for (int x = 0; x < 8; x++)
             {
-                if (_pieces[i, j] == piece)
+                for (int y = 0; y < 8; y++)
                 {
-                    return new Destination(i, j);
+                    if (_pieces[x, y] == piece)
+                    {
+                        return new Destination(x, y);
+                    }
                 }
             }
+            return null;
         }
-        return null;
+
+        public Piece GetPiece(Destination destination)
+        {
+            return _pieces[destination.X, destination.Y];
+        }
+
+        public void SetPlacePiece(Piece piece, Destination destination)
+        {
+            _pieces[destination.X, destination.Y] = piece;
+        }
+
+        public IPlayer GetWinner()
+        {
+            // Check if either King is captured
+            bool whiteKingAlive = false;
+            bool redKingAlive = false;
+
+            foreach (var piece in _pieces)
+            {
+                if (piece != null)
+                {
+                    if (piece.Type == CharType.King)
+                    {
+                        if (piece.Colour == Colour.White)
+                        {
+                            whiteKingAlive = true;
+                        }
+                        else if (piece.Colour == Colour.Red)
+                        {
+                            redKingAlive = true;
+                        }
+                    }
+                }
+            }
+
+            if (!whiteKingAlive)
+            {
+                return new Player(2, "Red");
+            }
+            else if (!redKingAlive)
+            {
+                return new Player(1, "White");
+            }
+
+            return null;
+        }
+
+        public bool HasPlayer(IPlayer player)
+        {
+            // Check if the player's pieces are still on the board
+            foreach (var piece in _pieces)
+            {
+                if (piece != null && (player.Id == 1 && piece.Colour == Colour.White || player.Id == 2 && piece.Colour == Colour.Red))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
-    public Piece GetPiece(Destination destination)
-    {
-        return _pieces[destination.x, destination.y];
-    }
-
-    public void SetPlacePiece(Piece piece, Destination destination)
-    {
-        _pieces[destination.x, destination.y] = piece;
-    }
-
-    public abstract IPlayer GetWinner();
-
-    public abstract bool HasPlayer(IPlayer player);
 }

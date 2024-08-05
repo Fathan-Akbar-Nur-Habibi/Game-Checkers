@@ -1,13 +1,17 @@
-namespace game_checkers;
-
-public class Destination
+using System;
+using System.Collections.Generic;
+namespace game_checkers
 {
-    public int x { get; }
-    public int y { get; }
-
-    public Destination(int x, int y)
+    public class Destination
     {
-        this.x = x;
-        this.y = y;
+        public int X { get; }
+        public int Y { get; }
+
+        public Destination(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
+
 }

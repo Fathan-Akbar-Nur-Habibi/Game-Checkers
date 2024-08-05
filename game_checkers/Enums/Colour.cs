@@ -1,8 +1,12 @@
-namespace game_checkers;
+using System;
+using System.Collections.Generic;
 
-public enum Colour
+namespace game_checkers
 {
-    Red,
-    White
-}
+    public enum Colour
+    {
+        Red,
+        White
+    }
 
+}

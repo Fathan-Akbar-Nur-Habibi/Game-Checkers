@@ -1,7 +1,14 @@
-namespace game_checkers;
+using System;
+using System.Collections.Generic;
 
-public interface IPlayer
+
+namespace game_checkers
 {
-    int Id { get; }
-    string Name { get; set; }
+    public interface IPlayer
+    {
+        int Id { get; set; }
+        string Name { get; set; }
+    }
+
+
 }
