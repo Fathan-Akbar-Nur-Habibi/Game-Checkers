@@ -48,23 +48,23 @@ namespace game_checkers
 
         public IPlayer GetWinner()
         {
-            bool whiteKingAlive = false;
-            bool redKingAlive = false;
+            bool whitePieces = false;
+            bool redPieces = false;
 
             foreach (var piece in _pieces)
             {
-                if (piece != null && piece is King)
+                if (piece != null)
                 {
                     if (piece.Colour == Colour.White)
-                        whiteKingAlive = true;
+                        whitePieces = true;
                     else if (piece.Colour == Colour.Red)
-                        redKingAlive = true;
+                        redPieces = true;
                 }
             }
 
-            if (!whiteKingAlive)
+            if (!whitePieces)
                 return new Player(2, "Red");
-            if (!redKingAlive)
+            if (!redPieces)
                 return new Player(1, "White");
 
             return null;

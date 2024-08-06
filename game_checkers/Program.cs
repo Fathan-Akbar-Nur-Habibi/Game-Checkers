@@ -6,132 +6,123 @@ namespace game_checkers
     {
         static void Main()
         {
-            IPlayer player1 = new Player(1, "White");
-            IPlayer player2 = new Player(2, "Red");
-            Piece[,] pieces = new Piece[8, 8];
+            Console.Write("Player 1 ID: ");
+            int player1Id = int.Parse(Console.ReadLine());
+            Console.Write("Player 1 Name: ");
+            string player1Name = Console.ReadLine();
+            IPlayer player1 = new Player(player1Id, player1Name);
 
-            InitializeBoard(pieces);
+            Console.Write("Player 2 ID: ");
+            int player2Id = int.Parse(Console.ReadLine());
+            Console.Write("Player 2 Name: ");
+            string player2Name = Console.ReadLine();
+            IPlayer player2 = new Player(player2Id, player2Name);
 
-            Board board = new ConcreteBoard(pieces);
-            GameController gameController = new GameController(player1, player2, board);
+            var boardSetup = new Piece[8, 8];
+            var board = new ConcreteBoard(boardSetup);
+            InitializeBoard(board, player1, player2);
 
-            gameController.OnTurnChanged += turn => Console.WriteLine($"{(turn == 0 ? "White" : "Red")}'s turn.");
-            gameController.OnPieceMoved += (piece, from, to) => Console.WriteLine($"Piece moved from {PositionToString(from)} to {PositionToString(to)}");
-            gameController.OnPieceRemoved += (piece, destination) => Console.WriteLine($"Piece removed from {PositionToString(destination)}");
-            gameController.OnGameEnded += player => Console.WriteLine($"Game ended! Winner: {player.Name}");
+            var gameController = new GameController(player1, player2, board);
+            gameController.OnPieceMoved += (piece, from, to) => Console.WriteLine($"Moved {piece.Colour} piece from {from.X + 1},{(char)(from.Y + 'a')} to {to.X + 1},{(char)(to.Y + 'a')}");
+            gameController.OnTurnChanged += turn => Console.WriteLine($"Player {(turn + 1)}'s turn.");
+            gameController.OnGameEnded += winner => Console.WriteLine($"Game over! Player {winner.Name} wins!");
 
-            Console.WriteLine("Checkers Game");
-            PrintBoard(board);
+            DisplayBoard(board);
 
-            bool gameRunning = true;
-            while (gameRunning)
+            while (true)
             {
-                Console.Write($"{(gameController.Turn == 0 ? "White" : "Red")}'s turn. Enter move (e.g., 'a2 a3'): ");
+                Console.Write("Enter move (format: x1,y1 x2,y2) or type 'exit' to quit: ");
                 string input = Console.ReadLine();
-                if (input.ToLower() == "exit")
+
+                if (input.Trim().ToLower() == "exit")
                 {
-                    gameRunning = false;
+                    Console.WriteLine("Game ended by player.");
                     break;
                 }
 
-                var moveParts = input.Split(' ');
-
-                if (moveParts.Length == 2)
+                try
                 {
-                    var from = ParseDestination(moveParts[0]);
-                    var to = ParseDestination(moveParts[1]);
-
-                    if (from != null && to != null)
+                    var move = ParseMove(input);
+                    var piece = board.GetPiece(move.Item1);
+                    if (piece != null && gameController.MakeMove(gameController.GetPlayers()[gameController.Turn], piece, move.Item1, move.Item2))
                     {
-                        var piece = board.GetPiece(from);
-                        if (piece != null && piece.Colour == (gameController.Turn == 0 ? Colour.White : Colour.Red))
-                        {
-                            if (gameController.MakeMove(gameController.GetPlayers()[gameController.Turn], piece, from, to))
-                            {
-                                PrintBoard(board);
-                                if (board.GetWinner() != null)
-                                {
-                                    gameRunning = false;
-                                }
-                                else
-                                {
-                                    gameController.ChangeTurn();
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid move. Try again.");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("No piece at the starting position or not your piece.");
-                        }
+                        DisplayBoard(board);
+                        gameController.ChangeTurn();
                     }
                     else
                     {
-                        Console.WriteLine("Invalid input. Use format 'a2 a3'.");
+                        Console.WriteLine("Invalid move. Try again.");
                     }
                 }
-                else
+                catch (FormatException ex)
                 {
-                    Console.WriteLine("Invalid input. Use format 'a2 a3'.");
+                    Console.WriteLine($"Error: {ex.Message}. Please use the format x1,y1 x2,y2.");
                 }
             }
         }
 
-        static void InitializeBoard(Piece[,] pieces)
+        static void InitializeBoard(Board board, IPlayer player1, IPlayer player2)
         {
-            for (int i = 0; i < 8; i += 2)
+            for (int y = 0; y < 8; y++)
             {
-                pieces[0, i + 1] = new Man(1, Colour.Red);
-                pieces[1, i] = new Man(1, Colour.Red);
-                pieces[2, i + 1] = new Man(1, Colour.Red);
-
-                pieces[5, i] = new Man(1, Colour.White);
-                pieces[6, i + 1] = new Man(1, Colour.White);
-                pieces[7, i] = new Man(1, Colour.White);
+                for (int x = 0; x < 3; x++)
+                {
+                    if ((x + y) % 2 != 0)
+                    {
+                        board.PlacePiece(new Man(player2.Id, Colour.Red, board), new Destination(x, y));
+                    }
+                }
+                for (int x = 5; x < 8; x++)
+                {
+                    if ((x + y) % 2 != 0)
+                    {
+                        board.PlacePiece(new Man(player1.Id, Colour.White, board), new Destination(x, y));
+                    }
+                }
             }
         }
 
-        static void PrintBoard(Board board)
+        static (Destination, Destination) ParseMove(string input)
         {
-            for (int i = 0; i < 8; i++)
+            var parts = input.Split(' ');
+            if (parts.Length != 2) throw new FormatException("Invalid format.");
+
+            var from = ParseCoordinate(parts[0]);
+            var to = ParseCoordinate(parts[1]);
+
+            return (from, to);
+        }
+
+        static Destination ParseCoordinate(string coordinate)
+        {
+            if (coordinate.Length != 3 || !char.IsDigit(coordinate[0]) || coordinate[1] != ',' || !char.IsLetter(coordinate[2]))
+                throw new FormatException("Invalid coordinate format.");
+
+            int x = int.Parse(coordinate[0].ToString()) - 1;
+            int y = char.ToLower(coordinate[2]) - 'a';
+
+            if (x < 0 || x >= 8 || y < 0 || y >= 8) throw new FormatException("Coordinate out of bounds.");
+
+            return new Destination(x, y);
+        }
+
+        static void DisplayBoard(Board board)
+        {
+            Console.WriteLine("  a b c d e f g h");
+            var pieces = board.GetBoard();
+            for (int x = 0; x < 8; x++)
             {
-                for (int j = 0; j < 8; j++)
+                Console.Write($"{x + 1} ");
+                for (int y = 0; y < 8; y++)
                 {
-                    var piece = board.GetPiece(new Destination(i, j));
+                    var piece = pieces[x, y];
                     if (piece == null)
-                    {
                         Console.Write("- ");
-                    }
-                    else if (piece.Colour == Colour.White)
-                    {
-                        Console.Write(piece.Type == CharType.King ? "K " : "W ");
-                    }
                     else
-                    {
-                        Console.Write(piece.Type == CharType.King ? "K " : "R ");
-                    }
+                        Console.Write($"{(piece.Colour == Colour.White ? 'W' : 'R')} ");
                 }
                 Console.WriteLine();
             }
-        }
-
-        static Destination ParseDestination(string pos)
-        {
-            if (pos.Length == 2 && pos[0] >= 'a' && pos[0] <= 'h' && pos[1] >= '1' && pos[1] <= '8')
-            {
-                int x = pos[1] - '1';
-                int y = pos[0] - 'a';
-                return new Destination(x, y);
-            }
-            return null;
-        }
-
-        static string PositionToString(Destination destination)
-        {
-            return $"{(char)(destination.Y + 'a')}{destination.X + 1}";
         }
     }
 }

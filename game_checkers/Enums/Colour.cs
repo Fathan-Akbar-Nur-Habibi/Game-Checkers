@@ -5,5 +5,4 @@ namespace game_checkers
         Red,
         White
     }
-
 }
