@@ -30,8 +30,8 @@ namespace game_checkers
 				return false;
 			}
 
-			board.SetPlacePiece(null, from);
-			board.SetPlacePiece(piece, to);
+			board.PlacePiece(null, from);
+			board.PlacePiece(piece, to);
 
 			OnPieceMoved?.Invoke(piece, from, to);
 

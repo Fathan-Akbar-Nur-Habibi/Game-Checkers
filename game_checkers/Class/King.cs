@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 namespace game_checkers
 
@@ -19,5 +18,4 @@ namespace game_checkers
 			return moves;
 		}
 	}
-
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 namespace game_checkers
 {
@@ -11,11 +10,10 @@ namespace game_checkers
 
 		public override List<Destination> AvailableMove()
 		{
-			// Implement Pawn-specific move logic here
+			// Implement man-specific move logic here
 			var moves = new List<Destination>();
-			// Example move logic for a pawn
+			// Example move logic for a man
 			return moves;
 		}
 	}
-
 }

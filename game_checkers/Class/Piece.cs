@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 namespace game_checkers
 
@@ -8,7 +7,7 @@ namespace game_checkers
 		public int Id { get; }
 		public CharType Type { get; }
 		public Colour Colour { get; }
-		public bool IsChangeable { get; set; }
+		//public bool IsChangeable { get; set; }
 
 		protected Piece(int id, CharType type, Colour colour)
 		{
@@ -19,5 +18,4 @@ namespace game_checkers
 
 		public abstract List<Destination> AvailableMove();
 	}
-
 }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 namespace game_checkers
 {
     public class Destination
@@ -12,6 +10,17 @@ namespace game_checkers
             X = x;
             Y = y;
         }
-    }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Destination destination &&
+                   X == destination.X &&
+                   Y == destination.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
+        }
+    }
 }

@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
-namespace game_checkers
 
+namespace game_checkers
 {
     public class Board
     {
-        protected Piece[,] _pieces = new Piece[8, 8];
+        protected readonly Piece[,] _pieces = new Piece[8, 8];
 
         public Piece[,] GetBoard() => _pieces;
 
         public Board(Piece[,] pieces)
         {
-            _pieces = pieces;
+            if (pieces.GetLength(0) != 8 || pieces.GetLength(1) != 8)
+                throw new ArgumentException("Board must be 8x8.", nameof(pieces));
+            Array.Copy(pieces, _pieces, pieces.Length);
         }
 
         public bool IsOccupied(Destination destination)
@@ -39,59 +41,43 @@ namespace game_checkers
             return _pieces[destination.X, destination.Y];
         }
 
-        public void SetPlacePiece(Piece piece, Destination destination)
+        public void PlacePiece(Piece piece, Destination destination)
         {
             _pieces[destination.X, destination.Y] = piece;
         }
 
         public IPlayer GetWinner()
         {
-            // Check if either King is captured
             bool whiteKingAlive = false;
             bool redKingAlive = false;
 
             foreach (var piece in _pieces)
             {
-                if (piece != null)
+                if (piece != null && piece is King)
                 {
-                    if (piece.Type == CharType.King)
-                    {
-                        if (piece.Colour == Colour.White)
-                        {
-                            whiteKingAlive = true;
-                        }
-                        else if (piece.Colour == Colour.Red)
-                        {
-                            redKingAlive = true;
-                        }
-                    }
+                    if (piece.Colour == Colour.White)
+                        whiteKingAlive = true;
+                    else if (piece.Colour == Colour.Red)
+                        redKingAlive = true;
                 }
             }
 
             if (!whiteKingAlive)
-            {
                 return new Player(2, "Red");
-            }
-            else if (!redKingAlive)
-            {
+            if (!redKingAlive)
                 return new Player(1, "White");
-            }
 
             return null;
         }
 
-        public bool HasPlayer(IPlayer player)
+        public bool HasPlayerPieces(IPlayer player)
         {
-            // Check if the player's pieces are still on the board
             foreach (var piece in _pieces)
             {
                 if (piece != null && (player.Id == 1 && piece.Colour == Colour.White || player.Id == 2 && piece.Colour == Colour.Red))
-                {
                     return true;
-                }
             }
             return false;
         }
     }
-
 }
