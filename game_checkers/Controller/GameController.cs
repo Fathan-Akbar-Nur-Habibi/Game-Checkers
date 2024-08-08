@@ -8,6 +8,8 @@ namespace GameCheckers
         public int Turn { get; private set; }
         private readonly IPlayer[] players;
         private readonly Board board;
+        private readonly Dictionary<IPlayer, Colour> playerColours = new Dictionary<IPlayer, Colour>();
+        private readonly Dictionary<IPlayer, Destination> playerPieceLocations = new Dictionary<IPlayer, Destination>();
 
         public event Action<int> OnTurnChanged;
         public event Action<Piece, Destination, Destination> OnPieceMoved;
@@ -30,25 +32,9 @@ namespace GameCheckers
                 return false;
             }
 
-
-            int deltaX = to.X - from.X;
-            int deltaY = to.Y - from.Y;
-
-            if (Math.Abs(deltaX) == 2 && Math.Abs(deltaY) == 2)
-            {
-                int capturedX = from.X + deltaX / 2;
-                int capturedY = from.Y + deltaY / 2;
-
-                Piece capturedPiece = board.GetPiece(new Destination(capturedX, capturedY));
-                if (capturedPiece != null && capturedPiece.Colour != piece.Colour)
-                {
-                    board.PlacePiece(null, new Destination(capturedX, capturedY));
-                    OnPieceRemoved?.Invoke(capturedPiece, new Destination(capturedX, capturedY));
-                }
-            }
-
             board.PlacePiece(null, from);
             board.PlacePiece(piece, to);
+            playerPieceLocations[player] = to; // Update player's piece location
 
             OnPieceMoved?.Invoke(piece, from, to);
 
@@ -57,11 +43,25 @@ namespace GameCheckers
             return true;
         }
 
-
         public void ChangeTurn()
         {
             Turn = (Turn + 1) % 2;
             OnTurnChanged?.Invoke(Turn);
+        }
+
+        public void SetPlayerColour(IPlayer player, Colour colour)
+        {
+            playerColours[player] = colour;
+        }
+
+        public Colour GetPlayerColour(IPlayer player)
+        {
+            return playerColours[player];
+        }
+
+        public Destination GetPlayerPieceLocation(IPlayer player)
+        {
+            return playerPieceLocations.ContainsKey(player) ? playerPieceLocations[player] : null;
         }
 
         private void CheckGameEnd()

@@ -20,12 +20,15 @@ namespace GameCheckers
 
             var boardSetup = new Piece[8, 8];
             var board = new ConcreteBoard(boardSetup);
-            InitializeBoard(board, player1, player2);
-
             var gameController = new GameController(player1, player2, board);
+
+            ChoosePlayerColours(gameController, player1, player2);
+
             gameController.OnPieceMoved += (piece, from, to) => Console.WriteLine($"Moved {piece.Colour} piece from {from.X + 1},{(char)(from.Y + 'a')} to {to.X + 1},{(char)(to.Y + 'a')}");
             gameController.OnTurnChanged += turn => Console.WriteLine($"Player {(turn + 1)}'s turn.");
             gameController.OnGameEnded += winner => Console.WriteLine($"Game over! Player {winner.Name} wins!");
+
+            InitializeBoard(board, player1, player2, gameController);
 
             DisplayBoard(board);
 
@@ -61,7 +64,29 @@ namespace GameCheckers
             }
         }
 
-        static void InitializeBoard(Board board, IPlayer player1, IPlayer player2)
+        static void ChoosePlayerColours(GameController gameController, IPlayer player1, IPlayer player2)
+        {
+            Console.Write("Player 1, choose your color (Red/White): ");
+            Colour player1Colour = ParseColour(Console.ReadLine());
+            Colour player2Colour = player1Colour == Colour.Red ? Colour.White : Colour.Red;
+
+            gameController.SetPlayerColour(player1, player1Colour);
+            gameController.SetPlayerColour(player2, player2Colour);
+
+            Console.WriteLine($"{player1.Name} chose {player1Colour}. {player2.Name} will play as {player2Colour}.");
+        }
+
+        static Colour ParseColour(string input)
+        {
+            return input.Trim().ToLower() switch
+            {
+                "red" => Colour.Red,
+                "white" => Colour.White,
+                _ => throw new FormatException("Invalid color. Choose either 'Red' or 'White'.")
+            };
+        }
+
+        static void InitializeBoard(Board board, IPlayer player1, IPlayer player2, GameController gameController)
         {
             for (int y = 0; y < 8; y++)
             {
@@ -69,14 +94,14 @@ namespace GameCheckers
                 {
                     if ((x + y) % 2 != 0)
                     {
-                        board.PlacePiece(new Man(player2.Id, Colour.Red, board), new Destination(x, y));
+                        board.PlacePiece(new Man(player2.Id, gameController.GetPlayerColour(player2), board), new Destination(x, y));
                     }
                 }
                 for (int x = 5; x < 8; x++)
                 {
                     if ((x + y) % 2 != 0)
                     {
-                        board.PlacePiece(new Man(player1.Id, Colour.White, board), new Destination(x, y));
+                        board.PlacePiece(new Man(player1.Id, gameController.GetPlayerColour(player1), board), new Destination(x, y));
                     }
                 }
             }
