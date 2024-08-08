@@ -25,11 +25,21 @@ namespace GameCheckers
                     int y = currentDestination.Y + dy;
                     while (IsValidMove(x, y))
                     {
-                        moves.Add(new Destination(x, y));
                         if (_board.IsOccupied(new Destination(x, y)))
                         {
+                            Piece midPiece = _board.GetPiece(new Destination(x, y));
+                            if (midPiece != null && midPiece.Colour != Colour)
+                            {
+                                int captureX = x + dx;
+                                int captureY = y + dy;
+                                if (IsValidMove(captureX, captureY) && !_board.IsOccupied(new Destination(captureX, captureY)))
+                                {
+                                    moves.Add(new Destination(captureX, captureY));
+                                }
+                            }
                             break;
                         }
+                        moves.Add(new Destination(x, y));
                         x += dx;
                         y += dy;
                     }
