@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace game_checkers
+namespace GameCheckers
 {
     public abstract class CharPiece : Piece
     {

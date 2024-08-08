@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace game_checkers
+namespace GameCheckers
 {
     public class King : CharPiece
     {

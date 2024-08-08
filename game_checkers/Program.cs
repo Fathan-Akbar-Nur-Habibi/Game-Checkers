@@ -1,6 +1,6 @@
 using System;
 
-namespace game_checkers
+namespace GameCheckers
 {
     class Program
     {

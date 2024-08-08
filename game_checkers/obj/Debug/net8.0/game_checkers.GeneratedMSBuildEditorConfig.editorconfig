@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = game_checkers
-build_property.ProjectDir = C:\Users\Lenovo\Documents\Game-Checkers\game_checkers\
+build_property.ProjectDir = C:\Users\Batch 11\Desktop\Game-Checkers\game_checkers\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
