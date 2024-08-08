@@ -30,6 +30,23 @@ namespace GameCheckers
                 return false;
             }
 
+
+            int deltaX = to.X - from.X;
+            int deltaY = to.Y - from.Y;
+
+            if (Math.Abs(deltaX) == 2 && Math.Abs(deltaY) == 2)
+            {
+                int capturedX = from.X + deltaX / 2;
+                int capturedY = from.Y + deltaY / 2;
+
+                Piece capturedPiece = board.GetPiece(new Destination(capturedX, capturedY));
+                if (capturedPiece != null && capturedPiece.Colour != piece.Colour)
+                {
+                    board.PlacePiece(null, new Destination(capturedX, capturedY));
+                    OnPieceRemoved?.Invoke(capturedPiece, new Destination(capturedX, capturedY));
+                }
+            }
+
             board.PlacePiece(null, from);
             board.PlacePiece(piece, to);
 
@@ -39,6 +56,7 @@ namespace GameCheckers
 
             return true;
         }
+
 
         public void ChangeTurn()
         {
