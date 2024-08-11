@@ -25,6 +25,32 @@ namespace GameCheckers
 
         public List<IPlayer> GetPlayers() => new List<IPlayer>(players);
 
+        public Piece[,] GetBoard() => board.GetType().GetProperty("Pieces", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(board) as Piece[,];
+
+        public IPlayer GetWinner()
+        {
+            bool whitePieces = false;
+            bool redPieces = false;
+
+            foreach (var piece in GetBoard())
+            {
+                if (piece != null)
+                {
+                    if (piece.Colour == Colour.White)
+                        whitePieces = true;
+                    else if (piece.Colour == Colour.Red)
+                        redPieces = true;
+                }
+            }
+
+            if (!whitePieces)
+                return players[1];
+            if (!redPieces)
+                return players[0];
+
+            return null;
+        }
+
         public bool MakeMove(IPlayer player, Piece piece, Destination from, Destination to)
         {
             if (board.IsOccupied(to) || !piece.AvailableMove(from).Contains(to))
@@ -66,7 +92,7 @@ namespace GameCheckers
 
         private void CheckGameEnd()
         {
-            var winner = board.GetWinner();
+            var winner = GetWinner();
             if (winner != null)
             {
                 OnGameEnded?.Invoke(winner);
