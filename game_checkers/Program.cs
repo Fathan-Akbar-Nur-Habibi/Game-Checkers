@@ -19,7 +19,7 @@ namespace GameCheckers
 			IPlayer player2 = new Player(player2Id, player2Name);
 
 			var boardSetup = new Piece[8, 8];
-			var board = new ConcreteBoard(boardSetup);
+			var board = new Board(boardSetup);
 			var gameController = new GameController(player1, player2, board);
 
 			ChoosePlayerColours(gameController, player1, player2);
