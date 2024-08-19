@@ -73,82 +73,103 @@ namespace GameCheckers
 			gameController.SetPlayerColour(player1, player1Colour);
 			gameController.SetPlayerColour(player2, player2Colour);
 
-			Console.WriteLine($"{player1.Name} chose {player1Colour}. {player2.Name} will play as {player2Colour}.");
+			Console.WriteLine($"{player1.Name} chose {player1Colour}. {player2.Name} will be {player2Colour}.");
 		}
 
 		static Colour ParseColour(string input)
 		{
-			return input.Trim().ToLower() switch
+			input = input.Trim().ToLower();
+			return input switch
 			{
 				"red" => Colour.Red,
 				"white" => Colour.White,
-				_ => throw new FormatException("Invalid color. Choose either 'Red' or 'White'.")
-				// "_" symbol underscore for explain any input that doesn't match the previous cases 
+			     _ => throw new FormatException("Invalid colour. Please enter 'Red' or 'White'.")
+					// use "_" discard pattern
 			};
 		}
 
 		static void InitializeBoard(Board board, IPlayer player1, IPlayer player2, GameController gameController)
 		{
-			for (int y = 0; y < 8; y++)
+			// Initialize Red pieces
+			for (int x = 0; x < 3; x++)
 			{
-				for (int x = 0; x < 3; x++)
+				for (int y = 0; y < 8; y++)
 				{
-					if ((x + y) % 2 != 0)
+					if ((x + y) % 2 == 1)
 					{
-						board.PlacePiece(new Man(player2.Id, gameController.GetPlayerColour(player2), board), new Destination(x, y));
-					}
-				}
-				for (int x = 5; x < 8; x++)
-				{
-					if ((x + y) % 2 != 0)
-					{
-						board.PlacePiece(new Man(player1.Id, gameController.GetPlayerColour(player1), board), new Destination(x, y));
+						var piece = new Man(2, Colour.Red, board);
+						board.PlacePiece(piece, new Destination(x, y));
 					}
 				}
 			}
-		}
 
-		static (Destination, Destination) ParseMove(string input)
-		{
-			var parts = input.Split(' ');
-			if (parts.Length != 2) throw new FormatException("Invalid format.");
-
-			var from = ParseCoordinate(parts[0]);
-			var to = ParseCoordinate(parts[1]);
-
-			return (from, to);
-		}
-
-		static Destination ParseCoordinate(string coordinate)
-		{
-			if (coordinate.Length != 3 || !char.IsDigit(coordinate[0]) || coordinate[1] != ',' || !char.IsLetter(coordinate[2]))
-				throw new FormatException("Invalid coordinate format.");
-
-			int x = int.Parse(coordinate[0].ToString()) - 1;
-			int y = char.ToLower(coordinate[2]) - 'a';
-
-			if (x < 0 || x >= 8 || y < 0 || y >= 8) throw new FormatException("Coordinate out of bounds.");
-
-			return new Destination(x, y);
+			// Initialize White pieces
+			for (int x = 5; x < 8; x++)
+			{
+				for (int y = 0; y < 8; y++)
+				{
+					if ((x + y) % 2 == 1)
+					{
+						var piece = new Man(1, Colour.White, board);
+						board.PlacePiece(piece, new Destination(x, y));
+					}
+				}
+			}
 		}
 
 		static void DisplayBoard(GameController gameController)
 		{
-			Console.WriteLine("  a b c d e f g h");
-			var pieces = gameController.GetBoard();
+			var board = gameController.GetBoard();
+
 			for (int x = 0; x < 8; x++)
 			{
-				Console.Write($"{x + 1} ");
 				for (int y = 0; y < 8; y++)
 				{
-					var piece = pieces[x, y];
+					var piece = board[x, y];
 					if (piece == null)
+					{
 						Console.Write("- ");
+					}
 					else
-						Console.Write($"{(piece.Colour == Colour.White ? 'W' : 'R')} ");
+					{
+						Console.Write($"{(piece.Colour == Colour.Red ? 'R' : 'W')} ");
+					}
 				}
 				Console.WriteLine();
 			}
+			Console.WriteLine();
+		}
+
+		static Tuple<Destination, Destination> ParseMove(string input)
+		{
+			var parts = input.Split(' ');
+			if (parts.Length != 2)
+			{
+				throw new FormatException("Invalid input. Please provide two coordinates.");
+			}
+
+			var from = ParseCoordinate(parts[0]);
+			var to = ParseCoordinate(parts[1]);
+
+			return Tuple.Create(from, to);
+		}
+
+		static Destination ParseCoordinate(string input)
+		{
+			if (input.Length != 2)
+			{
+				throw new FormatException("Invalid coordinate format. Use 'x,y'.");
+			}
+
+			int x = int.Parse(input[0].ToString()) - 1;
+			int y = input[1] - 'a';
+
+			if (x < 0 || x > 7 || y < 0 || y > 7)
+			{
+				throw new FormatException("Coordinate out of bounds.");
+			}
+
+			return new Destination(x, y);
 		}
 	}
 }

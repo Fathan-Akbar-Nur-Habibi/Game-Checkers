@@ -53,20 +53,38 @@ namespace GameCheckers
 
 		public bool MakeMove(IPlayer player, Piece piece, Destination from, Destination to)
 		{
-			if (board.IsOccupied(to) || !piece.AvailableMove(from).Contains(to))
+			if (!piece.AvailableMove(from).Contains(to))
 			{
 				return false;
 			}
-			if (piece is Man && (to.X == 0 || to.X == 7)) // for promote man to king
+
+			// Handle piece capture
+			int dx = to.X - from.X;
+			int dy = to.Y - from.Y;
+			if (Math.Abs(dx) == 2 && Math.Abs(dy) == 2)
+			{
+				Destination mid = new Destination(from.X + dx / 2, from.Y + dy / 2);
+				Piece capturedPiece = board.GetPiece(mid);
+				if (capturedPiece != null && capturedPiece.Colour != piece.Colour)
+				{
+					board.PlacePiece(null, mid);
+					OnPieceRemoved?.Invoke(capturedPiece, mid);
+				}
+			}
+
+			// Promote to King if reaching the opposite end
+			if (piece is Man && (to.X == 0 || to.X == 7))
 			{
 				var king = new King(piece.Id, piece.Colour, board);
 				board.PlacePiece(king, to);
 			}
-
+			else
+			{
+				board.PlacePiece(piece, to);
+			}
 
 			board.PlacePiece(null, from);
-			board.PlacePiece(piece, to);
-			playerPieceLocations[player] = to; // Update player's piece location
+			playerPieceLocations[player] = to;
 
 			OnPieceMoved?.Invoke(piece, from, to);
 
