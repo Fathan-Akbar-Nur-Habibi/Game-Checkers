@@ -6,7 +6,7 @@ namespace GameCheckers
 	{
 		static void Main()
 		{
-			Console.Write("Player 1 ID: ");
+			/*Console.Write("Player 1 ID: ");
 			int player1Id = int.Parse(Console.ReadLine());
 			Console.Write("Player 1 Name: ");
 			string player1Name = Console.ReadLine();
@@ -17,7 +17,24 @@ namespace GameCheckers
 			Console.Write("Player 2 Name: ");
 			string player2Name = Console.ReadLine();
 			IPlayer player2 = new Player(player2Id, player2Name);
-
+		  */
+		  	IPlayer player1 = CreatePlayer(1);
+			IPlayer player2 ;
+			
+			while (true)
+			{
+				player2 = CreatePlayer(2);
+				if (player1.Id == player2.Id)
+				
+				{
+					Console.WriteLine("This ID is already in use by another player. Please enter a different ID.");
+				}
+				else 
+				{
+					break;
+				}
+			}
+			
 			var boardSetup = new Piece[8, 8];
 			var board = new Board(boardSetup);
 			var gameController = new GameController(player1, player2, board);
@@ -27,6 +44,16 @@ namespace GameCheckers
 			gameController.OnPieceMoved += (piece, from, to) => Console.WriteLine($"Moved {piece.Colour} piece from {from.X + 1},{(char)(from.Y + 'a')} to {to.X + 1},{(char)(to.Y + 'a')}");
 			gameController.OnTurnChanged += turn => Console.WriteLine($"Player {(turn + 1)}'s turn.");
 			gameController.OnGameEnded += winner => Console.WriteLine($"Game over! Player {winner.Name} wins!");
+			
+			static IPlayer CreatePlayer(int playerNumber)
+			{
+				Console.Write($"Player {playerNumber} ID: ");
+				int playerId = int.Parse(Console.ReadLine());
+				Console.Write($"Player {playerNumber} Name: ");
+				string playerName = Console.ReadLine();
+				return new Player(playerId, playerName);
+			}
+
 
 			InitializeBoard(board, player1, player2, gameController);
 
@@ -83,7 +110,7 @@ namespace GameCheckers
 			{
 				"red" => Colour.Red,
 				"white" => Colour.White,
-			     _ => throw new FormatException("Invalid colour. Please enter 'Red' or 'White'.")
+				 _ => throw new FormatException("Invalid colour. Please enter 'Red' or 'White'.")
 					// use "_" discard pattern
 			};
 		}
@@ -119,10 +146,12 @@ namespace GameCheckers
 
 		static void DisplayBoard(GameController gameController)
 		{
+			Console.WriteLine("  a b c d e f g h");
 			var board = gameController.GetBoard();
-
+	
 			for (int x = 0; x < 8; x++)
 			{
+				Console.Write($"{x + 1} ");
 				for (int y = 0; y < 8; y++)
 				{
 					var piece = board[x, y];
