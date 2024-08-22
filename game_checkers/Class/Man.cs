@@ -29,7 +29,7 @@ namespace GameCheckers
 
 		private void AddMoveIfValid(List<Destination> moves, int x, int y)
 		{
-			if (x >= 0 && x < 8 && y >= 0 && y < 8 && !_board.IsOccupied(new Destination(x, y)))
+			if (IsWithinBounds(x, y) && !_board.IsOccupied(new Destination(x, y)))
 			{
 				moves.Add(new Destination(x, y));
 			}
@@ -51,12 +51,9 @@ namespace GameCheckers
 			if (IsWithinBounds(destX, destY) && _board.IsOccupied(new Destination(midX, midY)))
 			{
 				Piece midPiece = _board.GetPiece(new Destination(midX, midY));
-				if (midPiece != null && midPiece.Colour != Colour)
+				if (midPiece != null && midPiece.Colour != Colour && !_board.IsOccupied(new Destination(destX, destY)))
 				{
-					if (!_board.IsOccupied(new Destination(destX, destY)))
-					{
-						moves.Add(new Destination(destX, destY));
-					}
+					moves.Add(new Destination(destX, destY));
 				}
 			}
 		}
@@ -67,4 +64,3 @@ namespace GameCheckers
 		}
 	}
 }
-

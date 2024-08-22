@@ -15,14 +15,15 @@ namespace GameCheckers
         public override List<Destination> AvailableMove(Destination currentDestination)
         {
             var moves = new List<Destination>();
-
             int[] directions = { -1, 1 };
+            
             foreach (int dx in directions)
             {
                 foreach (int dy in directions)
                 {
                     int x = currentDestination.X + dx;
                     int y = currentDestination.Y + dy;
+                    
                     while (IsValidMove(x, y))
                     {
                         if (_board.IsOccupied(new Destination(x, y)))

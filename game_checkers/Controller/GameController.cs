@@ -88,9 +88,34 @@ namespace GameCheckers
 
 			OnPieceMoved?.Invoke(piece, from, to);
 
+			// Check for additional jumps
+			List<Destination> furtherMoves = piece.AvailableMove(to);
+			if (furtherMoves.Count > 0)
+			{
+				Console.WriteLine($"{player.Name}, you can make another jump. Enter your next move: ");
+				string input = Console.ReadLine();
+				if (!string.IsNullOrEmpty(input))
+				{
+					string[] move = input.Split(' ');
+					if (move.Length == 2)
+					{
+						Destination nextTo = new Destination(ConvertCoordinate(move[1][0]), int.Parse(move[1][1].ToString()) - 1);
+						if (MakeMove(player, piece, to, nextTo))
+						{
+							ChangeTurn();
+						}
+					}
+				}
+			}
+
 			CheckGameEnd();
 
 			return true;
+		}
+
+		private int ConvertCoordinate(char coordinate)
+		{
+			return coordinate - 'A';
 		}
 
 		public void ChangeTurn()
@@ -99,27 +124,16 @@ namespace GameCheckers
 			OnTurnChanged?.Invoke(Turn);
 		}
 
-		public void SetPlayerColour(IPlayer player, Colour colour)
-		{
-			playerColours[player] = colour;
-		}
-
-		public Colour GetPlayerColour(IPlayer player)
-		{
-			return playerColours[player];
-		}
-
-		public Destination GetPlayerPieceLocation(IPlayer player)
-		{
-			return playerPieceLocations.ContainsKey(player) ? playerPieceLocations[player] : null;
-		}
-
 		private void CheckGameEnd()
 		{
-			var winner = GetWinner();
+			IPlayer winner = GetWinner();
 			if (winner != null)
 			{
 				OnGameEnded?.Invoke(winner);
+			}
+			else
+			{
+				ChangeTurn();
 			}
 		}
 	}
