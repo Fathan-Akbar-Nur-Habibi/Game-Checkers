@@ -54,5 +54,24 @@ namespace GameCheckers
 			}
 			return false;
 		}
+
+		// add new logic
+		public bool IsOccupiedBySameColour(Destination destination, Colour colour)
+		{
+			var piece = _pieces[destination.X, destination.Y];
+			return piece != null && piece.Colour == colour;
+		}
+
+
+		public void RemovePiece(Destination destination)
+		{
+			_pieces[destination.X, destination.Y] = null; // Remove the piece from the board
+		}
+
+		public bool IsPieceBelongToPlayer(Destination destination, IPlayer player)
+		{
+			var piece = GetPiece(destination);
+			return piece != null && (player.Id == 1 && piece.Colour == Colour.White || player.Id == 2 && piece.Colour == Colour.Red);
+		}
 	}
 }

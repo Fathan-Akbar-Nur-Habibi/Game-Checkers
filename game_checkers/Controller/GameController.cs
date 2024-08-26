@@ -10,6 +10,7 @@ namespace GameCheckers
 		private readonly Board board;
 		private readonly Dictionary<IPlayer, Colour> playerColours = new Dictionary<IPlayer, Colour>();
 		private readonly Dictionary<IPlayer, Destination> playerPieceLocations = new Dictionary<IPlayer, Destination>();
+		private readonly Logger _logger = Logger.Instance;
 
 		public event Action<int> OnTurnChanged;
 		public event Action<Piece, Destination, Destination> OnPieceMoved;
@@ -21,6 +22,11 @@ namespace GameCheckers
 			players = new IPlayer[] { player1, player2 };
 			this.board = board;
 			Turn = 0;
+			
+			 // Subscribe to events
+            OnPieceMoved += (piece, from, to) => _logger.Log($"Moved {piece.Colour} piece from {from.X + 1},{(char)(from.Y + 'a')} to {to.X + 1},{(char)(to.Y + 'a')}");
+            OnTurnChanged += turn => _logger.Log($"Turn changed to Player {(turn + 1)}");
+            OnGameEnded += winner => _logger.Log($"Game over! Player {winner.Name} wins!");
 		}
 
 		public List<IPlayer> GetPlayers() => new List<IPlayer>(players);
@@ -67,27 +73,28 @@ namespace GameCheckers
 				Piece capturedPiece = board.GetPiece(mid);
 				if (capturedPiece != null && capturedPiece.Colour != piece.Colour)
 				{
-					board.PlacePiece(null, mid);
+					board.RemovePiece(mid); // Remove the captured piece
 					OnPieceRemoved?.Invoke(capturedPiece, mid);
 				}
 			}
-
-			// Promote to King if reaching the opposite end
-			if (piece is Man && (to.X == 0 || to.X == 7))
-			{
-				var king = new King(piece.Id, piece.Colour, board);
-				board.PlacePiece(king, to);
-			}
-			else
-			{
-				board.PlacePiece(piece, to);
-			}
-
+			// new code
+			// Move the piece to the new destination
+			board.PlacePiece(piece, to);
 			board.PlacePiece(null, from);
-			playerPieceLocations[player] = to;
-
 			OnPieceMoved?.Invoke(piece, from, to);
 
+			// Promote to King if reaching the opposite end
+			
+			if (piece is Man manPiece && ((to.X == 0 && manPiece.Colour == Colour.White) || (to.X == 7 && manPiece.Colour == Colour.Red)))
+		{
+			var king = new King(piece.Id, piece.Colour, board);
+			board.PlacePiece(king, to);
+			OnPieceMoved?.Invoke(king, from, to);
+			Console.WriteLine($"Currently Man {piece.Colour} Become King"); // Output message for promotion
+		}
+
+		playerPieceLocations[player] = to;
+		
 			// Check for additional jumps
 			List<Destination> furtherMoves = piece.AvailableMove(to);
 			if (furtherMoves.Count > 0)
@@ -99,9 +106,11 @@ namespace GameCheckers
 					string[] move = input.Split(' ');
 					if (move.Length == 2)
 					{
+						//try{
 						Destination nextTo = new Destination(ConvertCoordinate(move[1][0]), int.Parse(move[1][1].ToString()) - 1);
 						if (MakeMove(player, piece, to, nextTo))
 						{
+
 							ChangeTurn();
 						}
 					}
@@ -124,7 +133,7 @@ namespace GameCheckers
 			OnTurnChanged?.Invoke(Turn);
 		}
 
-		private void CheckGameEnd()
+		public void CheckGameEnd()
 		{
 			IPlayer winner = GetWinner();
 			if (winner != null)

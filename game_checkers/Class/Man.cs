@@ -39,19 +39,24 @@ namespace GameCheckers
 		{
 			AddCaptureMove(moves, startX, startY, direction, 1); // Capture diagonally right
 			AddCaptureMove(moves, startX, startY, direction, -1); // Capture diagonally left
+
 		}
 
 		private void AddCaptureMove(List<Destination> moves, int startX, int startY, int direction, int side)
 		{
+
+
 			int midX = startX + direction;
 			int midY = startY + side;
 			int destX = startX + 2 * direction;
 			int destY = startY + 2 * side;
 
 			if (IsWithinBounds(destX, destY) && _board.IsOccupied(new Destination(midX, midY)))
+
 			{
 				Piece midPiece = _board.GetPiece(new Destination(midX, midY));
 				if (midPiece != null && midPiece.Colour != Colour && !_board.IsOccupied(new Destination(destX, destY)))
+		
 				{
 					moves.Add(new Destination(destX, destY));
 				}

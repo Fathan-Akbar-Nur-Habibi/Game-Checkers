@@ -1,0 +1,3 @@
+8/26/2024 8:41:13 PM: Moved Red piece from 3,b to 4,a
+8/26/2024 8:41:14 PM: Turn changed to Player 2
+8/26/2024 8:41:14 PM: Turn changed to Player 1
