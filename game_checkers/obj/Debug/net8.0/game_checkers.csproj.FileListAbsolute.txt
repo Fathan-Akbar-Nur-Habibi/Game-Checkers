@@ -39,3 +39,5 @@ C:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\xunit.ass
 C:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\xunit.core.dll
 C:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\xunit.execution.dotnet.dll
 C:\Users\Lenovo\Documents\Game-Checkers\game_checkers\obj\Debug\net8.0\game_checkers.csproj.CopyComplete
+C:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Lenovo\Documents\Game-Checkers\game_checkers\bin\Debug\net8.0\NuGet.Frameworks.dll
