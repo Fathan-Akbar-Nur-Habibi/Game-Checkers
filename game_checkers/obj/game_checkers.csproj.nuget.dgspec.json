@@ -42,6 +42,14 @@
               "target": "Package",
               "version": "[17.11.0, )"
             },
+            "NUnit": {
+              "target": "Package",
+              "version": "[4.2.1, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
@@ -49,10 +57,6 @@
             "NuGet.Frameworks": {
               "target": "Package",
               "version": "[6.11.0, )"
-            },
-            "Nunit.Framework.TestCaseStorage": {
-              "target": "Package",
-              "version": "[1.0.1, )"
             }
           },
           "imports": [

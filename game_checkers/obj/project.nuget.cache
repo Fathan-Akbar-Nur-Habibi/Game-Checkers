@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BuEw0W62Wb957o01H2GlYwS/2taYgNJcxgTXFsXbUKpYcL2sRdvqc0V8gIdkLJdWB1zrDy98HIEO1rrWiQq7SQ==",
+  "dgSpecHash": "6mX7ReLdSBtVBOw9kolYujEOla35jsNOW43SOUJr0Sxl9OA7pKOdzSCykQoTISDGms1TWEOZMAbIFLtEb/Uf3Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lenovo\\Documents\\Game-Checkers\\game_checkers\\game_checkers.csproj",
   "expectedPackageFiles": [
@@ -10,30 +10,9 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.testplatform.testhost\\17.11.0\\microsoft.testplatform.testhost.17.11.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\nuget.frameworks\\6.11.0\\nuget.frameworks.6.11.0.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\nunit\\2.6.1\\nunit.2.6.1.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\nunit.framework.testcasestorage\\1.0.1\\nunit.framework.testcasestorage.1.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\nunit\\4.2.1\\nunit.4.2.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\nunit3testadapter\\4.6.0\\nunit3testadapter.4.6.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'NUnit 2.6.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "NUnit",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Nunit.Framework.TestCaseStorage 1.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Nunit.Framework.TestCaseStorage",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

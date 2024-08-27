@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace GameCheckers.Tests
@@ -11,7 +10,7 @@ namespace GameCheckers.Tests
         private Player _player1;
         private Player _player2;
         private Board _board;
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -64,10 +63,10 @@ namespace GameCheckers.Tests
             var result = _gameController.MakeMove(_player1, piece, from, to);
 
             // Assert
-            Assert.IsTrue(result);
-            Assert.IsNull(_board.GetPiece(from));
-            Assert.AreEqual(piece, _board.GetPiece(to));
-            Assert.AreEqual(1, _gameController.Turn);
+            Assert.That(result, Is.True);
+            Assert.That(_board.GetPiece(from), Is.Null);
+            Assert.That(_board.GetPiece(to), Is.EqualTo(piece));
+            Assert.That(_gameController.Turn, Is.EqualTo(1));
         }
 
         [Test]
@@ -82,10 +81,10 @@ namespace GameCheckers.Tests
             var result = _gameController.MakeMove(_player1, piece, from, to);
 
             // Assert
-            Assert.IsFalse(result);
-            Assert.AreEqual(piece, _board.GetPiece(from));
-            Assert.IsNull(_board.GetPiece(to));
-            Assert.AreEqual(0, _gameController.Turn);
+            Assert.That(result, Is.False);
+            Assert.That(_board.GetPiece(from), Is.EqualTo(piece));
+            Assert.That(_board.GetPiece(to), Is.Null);
+            Assert.That(_gameController.Turn, Is.EqualTo(0));
         }
 
         [Test]
@@ -105,11 +104,11 @@ namespace GameCheckers.Tests
             var result = _gameController.MakeMove(_player1, piece, from, to);
 
             // Assert
-            Assert.IsTrue(result);
-            Assert.IsNull(_board.GetPiece(from));
-            Assert.AreEqual(piece, _board.GetPiece(to));
-            Assert.IsNull(_board.GetPiece(mid)); // Captured piece is removed
-            Assert.AreEqual(1, _gameController.Turn);
+            Assert.That(result, Is.True);
+            Assert.That(_board.GetPiece(from), Is.Null);
+            Assert.That(_board.GetPiece(to), Is.EqualTo(piece));
+            Assert.That(_board.GetPiece(mid), Is.Null); // Captured piece is removed
+            Assert.That(_gameController.Turn, Is.EqualTo(1));
         }
 
         [Test]
@@ -133,7 +132,7 @@ namespace GameCheckers.Tests
             var winner = _gameController.GetWinner();
 
             // Assert
-            Assert.AreEqual(_player1, winner);
+            Assert.That(winner, Is.EqualTo(_player1));
         }
 
         [Test]
@@ -143,7 +142,7 @@ namespace GameCheckers.Tests
             var winner = _gameController.GetWinner();
 
             // Assert
-            Assert.IsNull(winner);
+            Assert.That(winner, Is.Null);
         }
 
         [Test]
@@ -158,8 +157,8 @@ namespace GameCheckers.Tests
             var result = _gameController.MakeMove(_player1, piece, from, to);
 
             // Assert
-            Assert.IsTrue(result);
-            Assert.IsInstanceOf<King>(_board.GetPiece(to));
+            Assert.That(result, Is.True);
+            Assert.That(_board.GetPiece(to), Is.InstanceOf<King>());
         }
 
         [Test]
@@ -186,7 +185,7 @@ namespace GameCheckers.Tests
             _gameController.CheckGameEnd();
 
             // Assert
-            Assert.IsTrue(eventTriggered);
+            Assert.That(eventTriggered, Is.True);
         }
     }
 }

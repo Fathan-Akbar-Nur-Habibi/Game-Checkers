@@ -12,7 +12,6 @@ namespace GameCheckers
 		{
 			IPlayer player1 = CreatePlayer(1);
 			IPlayer player2;
-			
 			while (true)
 			{
 				player2 = CreatePlayer(2);
@@ -20,12 +19,11 @@ namespace GameCheckers
 				{
 					Console.WriteLine("This ID is already in use by another player. Please enter a different ID.");
 				}
-				else 
+				else
 				{
 					break;
 				}
 			}
-			
 			var boardSetup = new Piece[8, 8];
 			var board = new Board(boardSetup);
 			var gameController = new GameController(player1, player2, board);
@@ -34,7 +32,7 @@ namespace GameCheckers
 			ChoosePlayerColours(player1, player2);
 
 			gameController.OnPieceMoved += (piece, from, to) => Console.WriteLine($"Moved {piece.Colour} piece from {from.X + 1},{(char)(from.Y + 'a')} to {to.X + 1},{(char)(to.Y + 'a')}");
-			gameController.OnTurnChanged += turn => Console.WriteLine($"Player, {(turn )}");
+			gameController.OnTurnChanged += turn => Console.WriteLine($"Player, {(turn)}");
 			gameController.OnGameEnded += winner => Console.WriteLine($"Game over! Player {winner.Name} wins!");
 
 			InitializeBoard(board, player1, player2);
@@ -72,41 +70,41 @@ namespace GameCheckers
 				}
 			}
 		}
-		
+
 		// Method to save the game state
-public static void SaveGameState(GameController gameController)
-{
-	var options = new JsonSerializerOptions
-	{
-		WriteIndented = true,
-		IncludeFields = true // Enable this to include non-public fields in serialization
-	};
+		public static void SaveGameState(GameController gameController)
+		{
+			var options = new JsonSerializerOptions
+			{
+				WriteIndented = true,
+				IncludeFields = true // Enable this to include non-public fields in serialization
+			};
 
-	string jsonString = JsonSerializer.Serialize(gameController, options);
-	
-	// Save the JSON string to a file
-	File.WriteAllText("game_state.json", jsonString);
-	
-	Logger.Instance.Log("Game state saved.");
-}
+			string jsonString = JsonSerializer.Serialize(gameController, options);
 
-// Method to load the game state
-public static GameController LoadGameState()
-{
-	if (!File.Exists("game_state.json"))
-	{
-		throw new FileNotFoundException("Saved game state file not found.");
-	}
+			// Save the JSON string to a file
+			File.WriteAllText("game_state.json", jsonString);
 
-	string jsonString = File.ReadAllText("game_state.json");
-	
-	var options = new JsonSerializerOptions
-	{
-		IncludeFields = true // Enable this to include non-public fields in serialization
-	};
+			Logger.Instance.Log("Game state saved.");
+		}
 
-	return JsonSerializer.Deserialize<GameController>(jsonString, options);
-}
+		// Method to load the game state
+		public static GameController LoadGameState()
+		{
+			if (!File.Exists("game_state.json"))
+			{
+				throw new FileNotFoundException("Saved game state file not found.");
+			}
+
+			string jsonString = File.ReadAllText("game_state.json");
+
+			var options = new JsonSerializerOptions
+			{
+				IncludeFields = true // Enable this to include non-public fields in serialization
+			};
+
+			return JsonSerializer.Deserialize<GameController>(jsonString, options);
+		}
 
 
 		static IPlayer CreatePlayer(int playerNumber)
@@ -174,7 +172,7 @@ public static GameController LoadGameState()
 		{
 			Console.WriteLine("  a b c d e f g h");
 			var board = gameController.GetBoard();
-	
+
 			for (int x = 0; x < 8; x++)
 			{
 				Console.Write($"{x + 1} ");

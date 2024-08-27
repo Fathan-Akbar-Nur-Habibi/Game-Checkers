@@ -306,25 +306,32 @@
           "lib/netstandard2.0/NuGet.Frameworks.dll": {}
         }
       },
-      "NUnit/2.6.1": {
+      "NUnit/4.2.1": {
         "type": "package",
         "compile": {
-          "lib/nunit.framework.dll": {}
+          "lib/net6.0/nunit.framework.dll": {
+            "related": ".legacy.xml;.xml"
+          },
+          "lib/net6.0/nunit.framework.legacy.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/nunit.framework.dll": {}
+          "lib/net6.0/nunit.framework.dll": {
+            "related": ".legacy.xml;.xml"
+          },
+          "lib/net6.0/nunit.framework.legacy.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/NUnit.props": {}
         }
       },
-      "Nunit.Framework.TestCaseStorage/1.0.1": {
+      "NUnit3TestAdapter/4.6.0": {
         "type": "package",
-        "dependencies": {
-          "NUnit": "2.6.1"
-        },
-        "compile": {
-          "lib/nunit.framework.testcasestorage.dll": {}
-        },
-        "runtime": {
-          "lib/nunit.framework.testcasestorage.dll": {}
+        "build": {
+          "build/netcoreapp3.1/NUnit3TestAdapter.props": {}
         }
       },
       "System.Reflection.Metadata/1.6.0": {
@@ -644,31 +651,56 @@
         "nuget.frameworks.nuspec"
       ]
     },
-    "NUnit/2.6.1": {
-      "sha512": "byiyAOxTyUpc9sTasSxdDsGGutZ+jMRclWJgwq9GURSmCFvPuqD2wDTUiJGdH+pTCIloqZBPDGl9EkxGr8Id/Q==",
+    "NUnit/4.2.1": {
+      "sha512": "B+IKGRrYN+DKdJMecO6aocA4v+46bV5/klsyovIV4TF3k8WPU2W5WvEWLJxSg1dx62qTBvysfXLWWenfAB8slg==",
       "type": "package",
-      "path": "nunit/2.6.1",
+      "path": "nunit/4.2.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/nunit.framework.dll",
-        "lib/nunit.framework.xml",
-        "license.txt",
-        "nunit.2.6.1.nupkg.sha512",
+        "LICENSE.txt",
+        "NOTICES.md",
+        "README.md",
+        "THIRD_PARTY_NOTICES.md",
+        "build/NUnit.props",
+        "icon.png",
+        "lib/net462/nunit.framework.dll",
+        "lib/net462/nunit.framework.legacy.dll",
+        "lib/net462/nunit.framework.legacy.xml",
+        "lib/net462/nunit.framework.xml",
+        "lib/net6.0/nunit.framework.dll",
+        "lib/net6.0/nunit.framework.legacy.dll",
+        "lib/net6.0/nunit.framework.legacy.xml",
+        "lib/net6.0/nunit.framework.xml",
+        "nunit.4.2.1.nupkg.sha512",
         "nunit.nuspec"
       ]
     },
-    "Nunit.Framework.TestCaseStorage/1.0.1": {
-      "sha512": "cor8GU/Zw6k85aLuH8REMGDaTJ2lxhi0ocsbz4gv6w/UVblXjENx8FMJHy6fNJTfhPcvB6ZBjPueDy3ZJJMUpg==",
+    "NUnit3TestAdapter/4.6.0": {
+      "sha512": "R7e1+a4vuV/YS+ItfL7f//rG+JBvVeVLX4mHzFEZo4W1qEKl8Zz27AqvQSAqo+BtIzUCo4aAJMYa56VXS4hudw==",
       "type": "package",
-      "path": "nunit.framework.testcasestorage/1.0.1",
+      "path": "nunit3testadapter/4.6.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/nunit.framework.testcasestorage.dll",
-        "lib/nunit.framework.testcasestorage.pdb",
-        "nunit.framework.testcasestorage.1.0.1.nupkg.sha512",
-        "nunit.framework.testcasestorage.nuspec"
+        "build/net462/NUnit3.TestAdapter.dll",
+        "build/net462/NUnit3.TestAdapter.pdb",
+        "build/net462/NUnit3TestAdapter.props",
+        "build/net462/nunit.engine.api.dll",
+        "build/net462/nunit.engine.core.dll",
+        "build/net462/nunit.engine.dll",
+        "build/net462/testcentric.engine.metadata.dll",
+        "build/netcoreapp3.1/NUnit3.TestAdapter.dll",
+        "build/netcoreapp3.1/NUnit3.TestAdapter.pdb",
+        "build/netcoreapp3.1/NUnit3TestAdapter.props",
+        "build/netcoreapp3.1/nunit.engine.api.dll",
+        "build/netcoreapp3.1/nunit.engine.core.dll",
+        "build/netcoreapp3.1/nunit.engine.dll",
+        "build/netcoreapp3.1/testcentric.engine.metadata.dll",
+        "docs/README.md",
+        "nunit3testadapter.4.6.0.nupkg.sha512",
+        "nunit3testadapter.nuspec",
+        "nunit_256.png"
       ]
     },
     "System.Reflection.Metadata/1.6.0": {
@@ -696,9 +728,10 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Microsoft.NET.Test.Sdk >= 17.11.0",
+      "NUnit >= 4.2.1",
+      "NUnit3TestAdapter >= 4.6.0",
       "Newtonsoft.Json >= 13.0.3",
-      "NuGet.Frameworks >= 6.11.0",
-      "Nunit.Framework.TestCaseStorage >= 1.0.1"
+      "NuGet.Frameworks >= 6.11.0"
     ]
   },
   "packageFolders": {
@@ -707,11 +740,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Game-Checkers\\game_checkers\\game_checkers.csproj",
+      "projectUniqueName": "c:\\Users\\Lenovo\\Documents\\Game-Checkers\\game_checkers\\game_checkers.csproj",
       "projectName": "game_checkers",
-      "projectPath": "C:\\Users\\Lenovo\\Documents\\Game-Checkers\\game_checkers\\game_checkers.csproj",
+      "projectPath": "c:\\Users\\Lenovo\\Documents\\Game-Checkers\\game_checkers\\game_checkers.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lenovo\\Documents\\Game-Checkers\\game_checkers\\obj\\",
+      "outputPath": "c:\\Users\\Lenovo\\Documents\\Game-Checkers\\game_checkers\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -742,6 +775,14 @@
             "target": "Package",
             "version": "[17.11.0, )"
           },
+          "NUnit": {
+            "target": "Package",
+            "version": "[4.2.1, )"
+          },
+          "NUnit3TestAdapter": {
+            "target": "Package",
+            "version": "[4.6.0, )"
+          },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
@@ -749,10 +790,6 @@
           "NuGet.Frameworks": {
             "target": "Package",
             "version": "[6.11.0, )"
-          },
-          "Nunit.Framework.TestCaseStorage": {
-            "target": "Package",
-            "version": "[1.0.1, )"
           }
         },
         "imports": [
@@ -774,27 +811,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.107/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'NUnit 2.6.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "NUnit",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Nunit.Framework.TestCaseStorage 1.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Nunit.Framework.TestCaseStorage",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }
